@@ -7,15 +7,15 @@ PayAssist is a two-surface project:
 Current implementation status:
 - Routed landing + app shell is live.
 - Core feature surfaces are implemented as interactive demo-backed workflows.
-- Firebase, Paytm, and Gemini client/server integration layers now exist with demo-safe fallbacks.
-- Express server scaffold exists under `server/`.
+- Hackathon runtime uses localStorage for auth/persistence.
+- Gemini can run directly from the frontend using a Vercel environment variable.
+- Express server scaffold still exists, but the current hackathon runtime does not require it.
 
 ## Run
 
 ```bash
 npm install
 npm run dev:client
-npm run dev:server
 ```
 
 ## Environment
@@ -23,16 +23,16 @@ npm run dev:server
 Create a frontend `.env` file:
 
 ```bash
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_FIREBASE_STORAGE_BUCKET=
-VITE_FIREBASE_MESSAGING_SENDER_ID=
-VITE_FIREBASE_APP_ID=
-VITE_API_BASE_URL=http://localhost:3001
+VITE_GEMINI_API_KEY=
+VITE_GEMINI_MODEL=gemini-1.5-flash
 ```
 
-Create a server `.env` file if you want to replace demo mode:
+For a hackathon deployment, you can skip Firebase and keep auth/data in localStorage.
+If you also want to skip Express, Gemini calls can run directly in the frontend using `VITE_GEMINI_API_KEY`.
+
+`VITE_API_BASE_URL` is optional and only needed if you decide to re-enable a backend route path later.
+
+Create a server `.env` file only if you want to keep the backend route path:
 
 ```bash
 PORT=3001
@@ -43,66 +43,6 @@ PAYTM_WEBSITE_DEV=WEBSTAGING
 PAYTM_CHANNEL_ID_DEV=WEB
 PAYTM_INDUSTRY_TYPE_DEV=Retail
 GEMINI_API_KEY=
-FIREBASE_PROJECT_ID=
-FIREBASE_CLIENT_EMAIL=
-FIREBASE_PRIVATE_KEY=
 ```
 
 Without these values, the app continues to work in demo fallback mode.
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

@@ -166,6 +166,7 @@ export function Features() {
       title: 'Payment Verified. In 10 seconds.',
       body: "No more calling customers back. No more 'let me check the app.' PayAssist pulls live status from Paytm rails and explains it in plain language.",
       accent: '#00B9F1',
+      href: '/app/verify',
       icon: <FaSearch />,
       gridClass: 'feature-span-8',
       visual: <MiniVerifier />,
@@ -175,6 +176,7 @@ export function Features() {
       title: 'Books close in 30 seconds',
       body: "AI matches your collected amounts against settlements. Flags every rupee that's off.",
       accent: '#0891B2',
+      href: '/app/reconciliation',
       icon: <FaChartBar />,
       gridClass: 'feature-span-4',
       visual: <MiniBars />,
@@ -184,6 +186,7 @@ export function Features() {
       title: 'Route smarter. Lose less.',
       body: 'Know which payment methods fail most for your merchant category. Optimize before losses compound.',
       accent: '#7C3AED',
+      href: '/app/router-insights',
       icon: <FaBrain />,
       gridClass: 'feature-span-4',
       visual: <div style={{ width: '92px', height: '92px', borderRadius: '50%', background: 'conic-gradient(var(--cyan) 0 68%, var(--navy) 68% 90%, var(--amber) 90% 100%)', margin: '0 auto' }} />,
@@ -193,6 +196,7 @@ export function Features() {
       title: 'Dispute filed. In 2 clicks.',
       body: 'PayAssist drafts your dispute response using exact transaction facts. Tracks RBI deadlines. Reminds you before expiry. You just review and approve.',
       accent: '#DC2626',
+      href: '/app/disputes',
       icon: <FaBalanceScale />,
       gridClass: 'feature-span-8',
       visual: <motion.div initial={{ opacity: 0.4 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ background: 'var(--surface)', borderRadius: '14px', padding: '14px', border: '1px solid var(--border)', fontSize: '13px', lineHeight: 1.6 }}>Dear Dispute Team, the merchant confirms the customer completed the purchase and received delivery on the same day...</motion.div>,
@@ -202,6 +206,7 @@ export function Features() {
       title: 'Your payment health score',
       body: 'Track success rates, dispute ratios, settlement velocity - and the one recommendation that matters most this week.',
       accent: '#059669',
+      href: '/app/analytics',
       icon: <FaChartLine />,
       gridClass: 'feature-row-full',
       layout: 'wide',
@@ -212,6 +217,7 @@ export function Features() {
       title: 'Ask in Hindi. Get answers in seconds.',
       body: 'Voice-first interface for the shop floor. No typing. No navigation. Just speak - and PayAssist explains your payment situation in plain language.',
       accent: '#DB2777',
+      href: '/app/voice',
       icon: <FaMicrophone />,
       gridClass: 'feature-row-full',
       layout: 'wide',
@@ -238,7 +244,7 @@ export function Features() {
                     <div style={{ width: '44px', height: '44px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${card.accent}18`, color: card.accent, fontSize: '18px', marginBottom: '18px' }}>{card.icon}</div>
                     <h3 style={{ color: 'var(--navy)', fontSize: '32px', lineHeight: 1.06, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
                     <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
-                    <a href="https://business.paytm.com/docs/api/" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Learn more →</a>
+                    <a href={card.href} style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Open feature →</a>
                   </div>
                   <div className="feature-card-visual-wrap">{card.visual}</div>
                 </div>
@@ -248,7 +254,7 @@ export function Features() {
                   <div style={{ marginBottom: '20px' }}>{card.visual}</div>
                   <h3 style={{ color: 'var(--navy)', fontSize: card.key === 'verifier' || card.key === 'dispute' ? '34px' : '24px', lineHeight: 1.08, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
-                  <a href="https://business.paytm.com/docs/api/" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Learn more →</a>
+                  <a href={card.href} style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Open feature →</a>
                 </>
               )}
             </motion.article>

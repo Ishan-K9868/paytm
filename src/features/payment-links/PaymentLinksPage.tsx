@@ -1,4 +1,4 @@
-import { Copy, QrCode, Send } from 'lucide-react';
+import { Copy, QrCode, Send, Check } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { AmountDisplay } from '@/components/AmountDisplay';
 import { Button } from '@/components/ui/Button';
@@ -14,12 +14,37 @@ export function PaymentLinksPage() {
   const [amount, setAmount] = useState('1250');
   const [customerName, setCustomerName] = useState('');
   const [createdLink, setCreatedLink] = useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const stats = useMemo(() => ({
     active: links.filter((link) => link.status === 'active').length,
     collected: links.filter((link) => link.status === 'paid').reduce((sum, item) => sum + item.amount, 0),
     expired: links.filter((link) => link.status === 'expired').length,
   }), [links]);
+
+  const handleCopy = async (linkUrl: string, linkId: string) => {
+    try {
+      await navigator.clipboard.writeText(linkUrl);
+      setCopiedId(linkId);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      // Fallback for browsers without clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = linkUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopiedId(linkId);
+      setTimeout(() => setCopiedId(null), 2000);
+    }
+  };
+
+  const handleShare = (linkUrl: string, description: string, amount: number) => {
+    const message = `Hi! Please pay ₹${amount.toFixed(2)} for "${description}" using this link: ${linkUrl}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <PageIntro actions={<Button onClick={() => setIsOpen(true)} type="button">+ Create Link</Button>} label="Payments" subtitle="Generate a payment request, then immediately share it across the customer's preferred channel." title="Payment Links">
@@ -39,7 +64,27 @@ export function PaymentLinksPage() {
             <span>{link.createdAt}</span>
             <span>{link.expiryDate ?? '-'}</span>
             <span className={`link-status ${link.status}`}>{link.status}</span>
-            <span className="link-actions"><button className="result-action-btn" type="button"><Copy size={14} /></button><button className="result-action-btn" type="button"><Send size={14} /></button>{link.status === 'active' ? <button className="result-action-btn" onClick={() => cancelLink(link.id)} type="button">Cancel</button> : null}</span>
+            <span className="link-actions">
+              <button 
+                className={`result-action-btn ${copiedId === link.id ? 'copied' : ''}`} 
+                onClick={() => handleCopy(link.linkUrl, link.id)} 
+                title="Copy link"
+                type="button"
+              >
+                {copiedId === link.id ? <Check size={14} /> : <Copy size={14} />}
+              </button>
+              <button 
+                className="result-action-btn" 
+                onClick={() => handleShare(link.linkUrl, link.description, link.amount)} 
+                title="Share via WhatsApp"
+                type="button"
+              >
+                <Send size={14} />
+              </button>
+              {link.status === 'active' ? (
+                <button className="result-action-btn cancel-btn" onClick={() => cancelLink(link.id)} title="Cancel link" type="button">Cancel</button>
+              ) : null}
+            </span>
           </div>
         ))}
       </div>
@@ -57,7 +102,16 @@ export function PaymentLinksPage() {
                 setCreatedLink(next.linkUrl);
               }} type="button">Create Link</Button>
             </div>
-            {createdLink ? <div className="share-panel"><div className="link-url">{createdLink}</div><div className="share-actions"><Button type="button"><Copy size={14} />Copy link</Button><Button type="button" variant="secondary"><Send size={14} />WhatsApp</Button><Button type="button" variant="secondary"><QrCode size={14} />QR Code</Button></div></div> : null}
+            {createdLink ? (
+              <div className="share-panel">
+                <div className="link-url">{createdLink}</div>
+                <div className="share-actions">
+                  <Button onClick={() => handleCopy(createdLink, 'new')} type="button"><Copy size={14} />Copy link</Button>
+                  <Button onClick={() => handleShare(createdLink, description, Number(amount))} type="button" variant="secondary"><Send size={14} />WhatsApp</Button>
+                  <Button type="button" variant="secondary"><QrCode size={14} />QR Code</Button>
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}

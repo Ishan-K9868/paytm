@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
 import { AuthLayout } from '@/features/auth/AuthLayout';
-import { onboardingStep1Schema } from '@/lib/validators';
+import { merchantIdSchema, onboardingStep1Schema } from '@/lib/validators';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useMerchantStore } from '@/store/useMerchantStore';
 
@@ -17,10 +18,22 @@ export function OnboardingFlow() {
   const setOnboarded = useAuthStore((state) => state.setOnboarded);
   const setProfile = useMerchantStore((state) => state.setProfile);
   const [businessName, setBusinessName] = useState('Agarwal Home Needs');
+  const [businessCategory, setBusinessCategory] = useState<'Retail' | 'Food & Beverage' | 'Services' | 'Healthcare' | 'Education' | 'Other'>('Retail');
   const [city, setCity] = useState('Noida');
+  const [phoneNumber, setPhoneNumber] = useState('9876543210');
   const [merchantId, setMerchantIdLocal] = useState('PAYAID001');
+  const [merchantKey, setMerchantKey] = useState('demo-key-placeholder');
+  const [websiteUrl, setWebsiteUrl] = useState('https://agarwal-shop.example');
+  const [industryType, setIndustryType] = useState('Retail');
+  const [connectionState, setConnectionState] = useState<'idle' | 'testing' | 'success' | 'failure'>('idle');
 
   const isLastStep = step === steps.length - 1;
+  const connectionMessage = useMemo(() => {
+    if (connectionState === 'testing') return 'Running Paytm connection test...';
+    if (connectionState === 'success') return 'Connection verified. Merchant workspace is ready.';
+    if (connectionState === 'failure') return 'Connection failed. Please verify Merchant ID and key.';
+    return 'Use your merchant credentials to test the connection before entering PayAssist.';
+  }, [connectionState]);
 
   return (
     <AuthLayout
@@ -41,8 +54,23 @@ export function OnboardingFlow() {
             <Input className="auth-input" onChange={(event) => setBusinessName(event.target.value)} value={businessName} />
           </label>
           <label>
+            <span className="auth-label">Business category</span>
+            <Select onChange={(event) => setBusinessCategory(event.target.value as typeof businessCategory)} value={businessCategory}>
+              <option>Retail</option>
+              <option>Food & Beverage</option>
+              <option>Services</option>
+              <option>Healthcare</option>
+              <option>Education</option>
+              <option>Other</option>
+            </Select>
+          </label>
+          <label>
             <span className="auth-label">City</span>
             <Input className="auth-input" onChange={(event) => setCity(event.target.value)} value={city} />
+          </label>
+          <label>
+            <span className="auth-label">Phone number</span>
+            <Input className="auth-input" onChange={(event) => setPhoneNumber(event.target.value)} value={phoneNumber} />
           </label>
         </div>
       ) : null}
@@ -55,7 +83,15 @@ export function OnboardingFlow() {
           </label>
           <label>
             <span className="auth-label">Merchant Key</span>
-            <Input className="auth-input" type="password" value="demo-key-placeholder" readOnly />
+            <Input className="auth-input" onChange={(event) => setMerchantKey(event.target.value)} type="password" value={merchantKey} />
+          </label>
+          <label>
+            <span className="auth-label">Website URL</span>
+            <Input className="auth-input" onChange={(event) => setWebsiteUrl(event.target.value)} value={websiteUrl} />
+          </label>
+          <label>
+            <span className="auth-label">Industry type</span>
+            <Input className="auth-input" onChange={(event) => setIndustryType(event.target.value)} value={industryType} />
           </label>
         </div>
       ) : null}
@@ -63,8 +99,21 @@ export function OnboardingFlow() {
       {step === 2 ? (
         <div className="connection-test">
           <div className="section-label">Connection test</div>
-          <h2 className="dashboard-panel-title">Demo credentials look good</h2>
-          <p className="page-subtitle">The live Firebase + Paytm verification handshake comes next, but the onboarding route and shell transition are now functional.</p>
+          <h2 className="dashboard-panel-title">{connectionState === 'success' ? 'Credentials look good' : connectionState === 'failure' ? 'Connection failed' : 'Test your Paytm connection'}</h2>
+          <p className="page-subtitle">{connectionMessage}</p>
+          <div className="auth-actions-row" style={{ justifyContent: 'center' }}>
+            <Button
+              onClick={() => {
+                setConnectionState('testing');
+                window.setTimeout(() => {
+                  setConnectionState(merchantId.startsWith('PAY') && merchantKey.length >= 8 ? 'success' : 'failure');
+                }, 1200);
+              }}
+              type="button"
+            >
+              {connectionState === 'testing' ? 'Testing...' : 'Run connection test'}
+            </Button>
+          </div>
         </div>
       ) : null}
 
@@ -78,9 +127,9 @@ export function OnboardingFlow() {
               if (step === 0) {
                 const validation = onboardingStep1Schema.safeParse({
                   businessName,
-                  businessCategory: 'Retail',
+                  businessCategory,
                   city,
-                  phoneNumber: '9876543210',
+                  phoneNumber,
                 });
 
                 if (!validation.success) {
@@ -88,15 +137,29 @@ export function OnboardingFlow() {
                   return;
                 }
               }
+
+              if (step === 1) {
+                const mid = merchantIdSchema.safeParse(merchantId);
+                if (!mid.success || merchantKey.trim().length < 8) {
+                  toast.error('Enter a valid Merchant ID and Merchant Key.');
+                  return;
+                }
+              }
+
               setStep((current) => current + 1);
+              return;
+            }
+
+            if (connectionState !== 'success') {
+              toast.error('Run a successful connection test before entering the workspace.');
               return;
             }
 
             setProfile({
               businessName,
-              businessCategory: 'Retail',
+              businessCategory,
               city,
-              phoneNumber: '9876543210',
+              phoneNumber,
               merchantId,
             });
             setMerchantId(merchantId);

@@ -23,6 +23,14 @@ const trustStats = [
   { value: '<30s', label: 'to close your day' },
 ];
 
+const APP_LINKS = [
+  { label: 'Open Dashboard', href: '/app/dashboard' },
+  { label: 'Verify Payment', href: '/app/verify' },
+  { label: 'Reconciliation', href: '/app/reconciliation' },
+  { label: 'Disputes', href: '/app/disputes' },
+  { label: 'Voice Copilot', href: '/app/voice' },
+];
+
 export function Hero() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const { x, y } = useMouseParallax();
@@ -214,7 +222,43 @@ export function Hero() {
                     </span>
                   </div>
                 </div>
-              ))}
+                ))}
+              </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.45 }}
+              style={{ marginTop: '26px' }}
+            >
+              <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '12px' }}>
+                Jump Into The Prototype
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                {APP_LINKS.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '10px 14px',
+                      borderRadius: 'var(--radius-pill)',
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border)',
+                      color: 'var(--navy)',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      boxShadow: 'var(--shadow-sm)',
+                    }}
+                  >
+                    {item.label}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                ))}
+              </div>
             </motion.div>
           </div>
 

@@ -44,7 +44,11 @@ export function useVerification() {
     const hasAnomaly = typeof expectedAmount === 'number' && !Number.isNaN(expectedAmount) && expectedAmount !== actualAmount;
     let explanation = data.aiExplanation;
     try {
-      explanation = await geminiClient.explainTransaction(data, 'en');
+      explanation = await geminiClient.explainTransaction(data, 'en', {
+        expectedAmount: txnAmount,
+        hasAnomaly,
+        merchantQuestion: 'Customer says they paid. Did we receive it?',
+      });
     } catch {
       explanation = data.aiExplanation;
     }

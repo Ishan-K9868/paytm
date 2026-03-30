@@ -18,7 +18,7 @@ const pageTitles: Record<string, string> = {
   '/app/settings': 'Settings',
 };
 
-export function TopBar() {
+export function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {
   const location = useLocation();
   const unreadCount = useNotificationStore((state) => state.unreadCount);
   const title = useMemo(() => pageTitles[location.pathname] ?? 'PayAssist', [location.pathname]);
@@ -26,7 +26,7 @@ export function TopBar() {
   return (
     <header className="app-topbar">
       <div className="breadcrumb">
-        <button aria-label="Open navigation" className="topbar-mobile-menu" type="button">
+        <button aria-label="Open navigation" className="topbar-mobile-menu" onClick={onOpenSidebar} type="button">
           <Menu size={18} />
         </button>
         <span className="breadcrumb-root">Home</span>

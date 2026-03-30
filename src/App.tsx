@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import { AppShell } from '@/components/layout/AppShell';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { queryClient } from '@/lib/queryClient';
+import { useAuthBootstrap } from '@/hooks/useAuthBootstrap';
 
 const LandingPage = lazy(() => import('@/routes/LandingPage').then((module) => ({ default: module.LandingPage })));
 const LoginPage = lazy(() => import('@/features/auth/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -27,6 +28,7 @@ function RouteLoadingFallback() {
 }
 
 function App() {
+  useAuthBootstrap();
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window === 'undefined') return 'light';
     const saved = window.localStorage.getItem('payassist-theme');

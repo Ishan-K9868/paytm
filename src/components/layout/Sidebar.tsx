@@ -15,6 +15,7 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { NotificationBell } from '@/components/NotificationBell';
+import { useAuth } from '@/hooks/useAuth';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useMerchantStore } from '@/store/useMerchantStore';
 import { useNotificationStore } from '@/store/useNotificationStore';
@@ -72,14 +73,14 @@ function NavItem({ item }: { item: NavItemConfig }) {
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const profile = useMerchantStore((state) => state.profile);
-  const logout = useAuthStore((state) => state.logout);
   const user = useAuthStore((state) => state.user);
   const unreadCount = useNotificationStore((state) => state.unreadCount);
+  const { logout } = useAuth();
 
   return (
-    <aside className="app-sidebar sidebar">
+    <aside className={`app-sidebar sidebar ${isOpen ? 'open' : ''}`.trim()}>
       <div className="app-sidebar-brand">
         <div className="app-logo-mark">P</div>
         <div>
@@ -102,7 +103,7 @@ export function Sidebar() {
             <div className="app-nav-section section-header">{group.section}</div>
             <div className="app-nav-list">
               {group.items.map((item) => (
-                <NavItem item={item} key={item.path} />
+                <span key={item.path} onClick={onClose}><NavItem item={item} /></span>
               ))}
             </div>
           </div>
@@ -112,7 +113,7 @@ export function Sidebar() {
       <div className="app-sidebar-bottom">
         <div className="app-sidebar-utility-row">
           <NotificationBell count={unreadCount} sidebar />
-          <Link aria-label="Open settings" className="sidebar-utility-link" to="/app/settings">
+          <Link aria-label="Open settings" className="sidebar-utility-link" onClick={onClose} to="/app/settings">
             <Settings size={18} />
           </Link>
         </div>
@@ -122,7 +123,7 @@ export function Sidebar() {
             <div className="app-user-name">{user?.displayName ?? 'Merchant demo'}</div>
             <div className="app-user-email">{user?.email ?? 'demo@payassist.app'}</div>
           </div>
-          <button aria-label="Log out" className="sidebar-utility-link" onClick={logout} type="button">
+          <button aria-label="Log out" className="sidebar-utility-link" onClick={() => void logout()} type="button">
             <LogOut size={16} />
           </button>
         </div>

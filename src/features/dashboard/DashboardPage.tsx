@@ -85,29 +85,33 @@ export function DashboardPage() {
           </div>
         </Card>
 
-        <Card accent="success" className="dashboard-panel dashboard-wide-panel">
+        <Card accent="success" className="dashboard-panel dashboard-close-panel">
           <div className="dashboard-panel-header">
             <div>
               <div className="section-label">Close Day</div>
               <h2 className="dashboard-panel-title">Tonight's operational snapshot</h2>
             </div>
           </div>
-          <div className="snapshot-grid">
+          <div className="snapshot-grid dashboard-close-grid">
             <div className="snapshot-metric">
               <span className="snapshot-label">Anomalies</span>
-              <strong>{demoReconciliationSummary.anomalyCount}</strong>
+              <strong className="snapshot-value">{demoReconciliationSummary.anomalyCount}</strong>
+              <span className="snapshot-note">Flagged before close</span>
             </div>
             <div className="snapshot-metric">
               <span className="snapshot-label">Collected</span>
-              <strong><AmountDisplay amount={demoReconciliationSummary.totalCollected} size="lg" /></strong>
+              <strong className="snapshot-value"><AmountDisplay amount={demoReconciliationSummary.totalCollected} size="lg" /></strong>
+              <span className="snapshot-note">Captured across today's ledger</span>
             </div>
             <div className="snapshot-metric">
               <span className="snapshot-label">Settled</span>
-              <strong><AmountDisplay amount={demoReconciliationSummary.totalSettled} size="lg" /></strong>
+              <strong className="snapshot-value"><AmountDisplay amount={demoReconciliationSummary.totalSettled} size="lg" /></strong>
+              <span className="snapshot-note">Marked as settled so far</span>
             </div>
             <div className="snapshot-metric">
               <span className="snapshot-label">Delta</span>
-              <strong><AmountDisplay amount={demoReconciliationSummary.delta} size="lg" type="debit" /></strong>
+              <strong className="snapshot-value negative"><AmountDisplay amount={demoReconciliationSummary.delta} size="lg" type="debit" /></strong>
+              <span className="snapshot-note">Needs reconciliation follow-up</span>
             </div>
           </div>
         </Card>

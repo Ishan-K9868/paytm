@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { demoPaymentLinks } from '@/data/demoAppData';
 import { paytmClient } from '@/lib/paytm';
 import type { PaymentLink } from '@/types/payment.types';
 
 export function usePaymentLinks() {
-  const [links, setLinks] = useState<PaymentLink[]>(demoPaymentLinks);
+  const [links, setLinks] = useLocalStorage<PaymentLink[]>('payassist-payment-links', demoPaymentLinks);
 
   const createLink = async (payload: { amount: number; description: string; customerName?: string; customerPhone?: string; expiryLabel: string }) => {
     const id = `link-${links.length + 1}`;

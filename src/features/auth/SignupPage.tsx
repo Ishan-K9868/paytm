@@ -16,7 +16,7 @@ export function SignupPage() {
   return (
     <AuthLayout
       eyebrow="New Workspace"
-      subtitle={usingDemoMode ? 'This creates a fully routed demo workspace until Firebase project variables are connected.' : 'Create your merchant workspace and continue into onboarding.'}
+      subtitle={usingDemoMode ? 'This creates a local demo workspace for the hackathon build and saves it in your browser.' : 'Create your merchant workspace and continue into onboarding.'}
       title="Create your PayAssist workspace"
     >
       <div className="auth-form-grid">

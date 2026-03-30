@@ -4,7 +4,7 @@ import { BorderReveal } from '../components/BorderReveal';
 const SECURITY_FEATURES = [
   { icon: '🔒', title: 'DPDP 2023 Compliant', desc: 'Client-side redaction of PII. Data retained only for transaction lifecycle duration.' },
   { icon: '🔑', title: 'No Stored Credentials', desc: 'We never store your Paytm API keys. All secrets live in environment - never in our database.' },
-  { icon: '🛡', title: 'Server-Side Checksums', desc: 'All Paytm API calls verified server-side. No checksum generation in client code - ever.' },
+  { icon: '🛡', title: 'Production-Ready Checksums', desc: 'Live Paytm integrations are designed to move behind secure server-side checksum handling. The hackathon build keeps payment flows simulated.' },
   { icon: '📋', title: 'RBI Framework Aligned', desc: 'Dispute timelines, refund SLAs, and escalation paths follow RBI outer limits - not guesses.' },
   { icon: '🔐', title: 'Webhook Idempotency', desc: 'Duplicate webhook deliveries are deduplicated. No double-counted payments.' },
   { icon: '⚖️', title: 'AI Disclaimer Layer', desc: 'AI explanations are clearly labeled. Settlement ETAs show ranges, not guaranteed times.' },

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { voiceQueries } from '@/data/demoAppData';
+import { demoAnalytics, demoDisputes, demoReconciliationSummary, voiceQueries } from '@/data/demoAppData';
 import { geminiClient } from '@/lib/gemini';
 import type { VoiceResponse } from '@/types/insights.types';
 
@@ -37,7 +37,13 @@ export function useVoice() {
     setResponse(null);
     await new Promise((resolve) => window.setTimeout(resolve, 1400));
     const normalized = query.trim().toLowerCase();
-    const apiResponse = await geminiClient.answerMerchantQuery(normalized).catch(() => undefined);
+    const apiResponse = await geminiClient.answerMerchantQuery(normalized, {
+      todayCollected: demoAnalytics.volume.at(-1)?.amount,
+      avgSuccessRate: demoAnalytics.avgSuccessRate,
+      anomalyCount: demoReconciliationSummary.anomalyCount,
+      disputesOpen: demoDisputes.filter((item) => !item.status.startsWith('resolved')).length,
+      topRoutes: ['/app/verify', '/app/reconciliation', '/app/disputes', '/app/analytics'],
+    }).catch(() => undefined);
     setResponse(apiResponse ?? voiceQueries[normalized] ?? fallbackResponse);
     setIsThinking(false);
   };

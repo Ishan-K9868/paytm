@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { MerchantProfile, TodayStats } from '@/types/merchant.types';
 
 interface MerchantState {
@@ -28,12 +29,20 @@ const demoStats: TodayStats = {
   successRate: 96.8,
 };
 
-export const useMerchantStore = create<MerchantState>((set) => ({
-  profile: null,
-  todayStats: null,
-  healthScore: null,
-  setProfile: (profile) => set({ profile }),
-  setTodayStats: (todayStats) => set({ todayStats }),
-  setHealthScore: (healthScore) => set({ healthScore }),
-  seedDemoData: () => set({ profile: demoProfile, todayStats: demoStats, healthScore: 88 }),
-}));
+export const useMerchantStore = create<MerchantState>()(
+  persist(
+    (set, get) => ({
+      profile: null,
+      todayStats: null,
+      healthScore: null,
+      setProfile: (profile) => set({ profile }),
+      setTodayStats: (todayStats) => set({ todayStats }),
+      setHealthScore: (healthScore) => set({ healthScore }),
+      seedDemoData: () => {
+        if (get().profile && get().todayStats && get().healthScore !== null) return;
+        set({ profile: demoProfile, todayStats: demoStats, healthScore: 88 });
+      },
+    }),
+    { name: 'payassist-merchant' }
+  )
+);

@@ -4,10 +4,12 @@ import { AmountDisplay } from '@/components/AmountDisplay';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { demoReconciliationSummary } from '@/data/demoAppData';
+import { useEndOfDay } from '@/features/end-of-day/useEndOfDay';
 import { PageIntro } from '@/features/shared/PageIntro';
 
 export function EndOfDayPage() {
   const [step, setStep] = useState(0);
+  const { summaryText, isGenerating, generateSummary } = useEndOfDay(step);
 
   return (
     <PageIntro label="Operations" subtitle="Review today's books, let PayAssist write a short summary, and export your close in a clean sequence." title="End of Day">
@@ -30,7 +32,7 @@ export function EndOfDayPage() {
           <div className="dashboard-wide-panel clean-state-card">
             <div className="dashboard-panel-title">{demoReconciliationSummary.anomalyCount > 0 ? `${demoReconciliationSummary.anomalyCount} anomalies need your attention` : 'Looks good - close the day'}</div>
             <p className="page-subtitle">Resolve reconciliation issues before generating the final close memo.</p>
-            <Button onClick={() => setStep(1)} type="button">Proceed to AI Summary</Button>
+            <Button onClick={() => { void generateSummary(); setStep(1); }} type="button">Proceed to AI Summary</Button>
           </div>
         </div>
       ) : null}
@@ -39,7 +41,7 @@ export function EndOfDayPage() {
         <div className="eod-memo-wrap">
           <div className="eod-memo">
             <div className="memo-header"><span>AI Day Summary</span><Sparkles size={14} /></div>
-            <div className="memo-text">Today you collected Rs. 13,760 across 6 tracked payment events, with most clean volume coming through UPI and QR. Two reconciliation anomalies remain open, so the day is financially close but not fully balanced yet. Resolve the short settlement deltas before declaring the books completely clean.</div>
+            <div className="memo-text">{isGenerating ? 'PayAssist is writing your end-of-day summary...' : summaryText}</div>
           </div>
           <div className="auth-actions-row"><Button onClick={() => setStep(0)} type="button" variant="secondary">Back</Button><Button onClick={() => setStep(2)} type="button">Confirm & Export</Button></div>
         </div>

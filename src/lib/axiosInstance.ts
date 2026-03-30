@@ -1,18 +1,9 @@
 import axios from 'axios';
 import { toast } from 'sonner';
-import { auth } from '@/lib/firebase';
 import { useAuthStore } from '@/store/useAuthStore';
 
 export const api = axios.create({
-  baseURL: '/api',
-});
-
-api.interceptors.request.use(async (config) => {
-  const token = await auth.currentUser?.getIdToken().catch(() => undefined);
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? '',
 });
 
 api.interceptors.response.use(

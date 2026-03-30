@@ -25,7 +25,17 @@ export function useDisputes() {
     const dispute = demoDisputes.find((item) => item.id === disputeId);
     const txn = dispute ? await paytmClient.verifyTransaction(dispute.orderId).catch(() => undefined) : undefined;
     const generated = dispute && txn
-      ? await geminiClient.draftDisputeResponse({ dispute, txn }).catch(() => undefined)
+      ? await geminiClient.draftDisputeResponse({
+          dispute: {
+            ...dispute,
+            aiDraft: undefined,
+            merchantResponse: `Deadline in ${dispute.daysRemaining} day(s); urgency ${dispute.urgency}`,
+          },
+          txn: {
+            ...txn,
+            aiSuggestedAction: txn.aiSuggestedAction ?? 'Use transaction facts and bank reference in the response.',
+          },
+        }).catch(() => undefined)
       : undefined;
     setDrafts((current) => ({
       ...current,

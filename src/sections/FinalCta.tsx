@@ -15,8 +15,8 @@ export function FinalCta() {
             Join India's merchants who've stopped guessing about their payments. PayAssist runs on Paytm infrastructure - you already have everything you need.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '40px', flexWrap: 'wrap' }}>
-            <button onClick={() => window.open('https://business.paytm.com/', '_blank', 'noopener,noreferrer')} style={{ background: 'var(--cyan)', color: 'var(--navy)', padding: '18px 40px', borderRadius: 'var(--radius-pill)', fontSize: '17px', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: 'var(--shadow-cyan)', letterSpacing: '-0.01em' }}>Try PayAssist free →</button>
-            <button onClick={() => window.open('https://business.paytm.com/', '_blank', 'noopener,noreferrer')} style={{ background: 'transparent', color: 'white', padding: '18px 40px', borderRadius: 'var(--radius-pill)', fontSize: '17px', fontWeight: 600, border: '2px solid rgba(255,255,255,0.2)', cursor: 'pointer' }}>View on Paytm for Business</button>
+            <a href="/auth/login" style={{ background: 'var(--cyan)', color: 'var(--navy)', padding: '18px 40px', borderRadius: 'var(--radius-pill)', fontSize: '17px', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: 'var(--shadow-cyan)', letterSpacing: '-0.01em', textDecoration: 'none' }}>Try PayAssist free →</a>
+            <a href="/app/dashboard" style={{ background: 'transparent', color: 'white', padding: '18px 40px', borderRadius: 'var(--radius-pill)', fontSize: '17px', fontWeight: 600, border: '2px solid rgba(255,255,255,0.2)', cursor: 'pointer', textDecoration: 'none' }}>Open dashboard</a>
           </motion.div>
           <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '13px', marginTop: '24px' }}>Built on Paytm merchant stack · DPDP compliant · No card required</p>
         </div>

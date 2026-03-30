@@ -12,7 +12,7 @@ export function NotificationsPage() {
     <PageIntro
       actions={<Button onClick={markAllRead} type="button" variant="secondary">Mark all read</Button>}
       label="Inbox"
-      subtitle="This routed page already uses the shared store, so real-time Firestore listeners can replace the seeded feed next."
+      subtitle="This routed page stores notification state locally for the hackathon build, so the demo stays stable without backend setup."
       title="Notifications"
     >
       <div className="filter-pill-row" style={{ marginBottom: 16 }}>

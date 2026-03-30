@@ -17,7 +17,7 @@ export function LoginPage() {
   return (
     <AuthLayout
       eyebrow="Merchant Access"
-      subtitle={usingDemoMode ? 'Firebase is not configured yet, so this screen falls back to a full demo sign-in flow.' : 'Sign in with your merchant credentials to enter PayAssist.'}
+      subtitle={usingDemoMode ? 'This hackathon build uses a fast local demo sign-in so you can enter the workspace instantly.' : 'Sign in with your merchant credentials to enter PayAssist.'}
       title="Sign in to PayAssist"
     >
       <div className="auth-form-grid">
