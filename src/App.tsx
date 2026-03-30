@@ -1,27 +1,30 @@
-import { useEffect, useState } from 'react';
-import { MotionConfig } from 'motion/react';
-import { ReactLenis } from 'lenis/react';
-import { AmbientOrbs } from './components/AmbientOrbs';
-import { BottomNav } from './components/BottomNav';
-import { CustomCursor } from './components/CustomCursor';
-import { FloatingToasts } from './components/FloatingToasts';
-import { RupeeSpine } from './components/RupeeSpine';
-import { SidebarNav } from './components/SidebarNav';
-import { ThemeToggle } from './components/ThemeToggle';
-import { ApiGrid } from './sections/ApiGrid';
-import { Features } from './sections/Features';
-import { FinalCta } from './sections/FinalCta';
-import { FooterSection } from './sections/FooterSection';
-import { Hero } from './sections/Hero';
-import { HowItWorks } from './sections/HowItWorks';
-import { LiveDemo } from './sections/LiveDemo';
-import { Problem } from './sections/Problem';
-import { Reconcile } from './sections/Reconcile';
-import { Roi } from './sections/Roi';
-import { Security } from './sections/Security';
-import { Stats } from './sections/Stats';
-import { Testimonials } from './sections/Testimonials';
-import { Voice } from './sections/Voice';
+import { Suspense, lazy, useEffect, useState } from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import { AppShell } from '@/components/layout/AppShell';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { queryClient } from '@/lib/queryClient';
+
+const LandingPage = lazy(() => import('@/routes/LandingPage').then((module) => ({ default: module.LandingPage })));
+const LoginPage = lazy(() => import('@/features/auth/LoginPage').then((module) => ({ default: module.LoginPage })));
+const SignupPage = lazy(() => import('@/features/auth/SignupPage').then((module) => ({ default: module.SignupPage })));
+const OnboardingFlow = lazy(() => import('@/features/auth/OnboardingFlow').then((module) => ({ default: module.OnboardingFlow })));
+const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then((module) => ({ default: module.DashboardPage })));
+const VerifierPage = lazy(() => import('@/features/verifier/VerifierPage').then((module) => ({ default: module.VerifierPage })));
+const ReconciliationPage = lazy(() => import('@/features/reconciliation/ReconciliationPage').then((module) => ({ default: module.ReconciliationPage })));
+const DisputesPage = lazy(() => import('@/features/disputes/DisputesPage').then((module) => ({ default: module.DisputesPage })));
+const VoicePage = lazy(() => import('@/features/voice/VoicePage').then((module) => ({ default: module.VoicePage })));
+const RouterInsightsPage = lazy(() => import('@/features/router-insights/RouterInsightsPage').then((module) => ({ default: module.RouterInsightsPage })));
+const EndOfDayPage = lazy(() => import('@/features/end-of-day/EndOfDayPage').then((module) => ({ default: module.EndOfDayPage })));
+const AnalyticsPage = lazy(() => import('@/features/analytics/AnalyticsPage').then((module) => ({ default: module.AnalyticsPage })));
+const NotificationsPage = lazy(() => import('@/features/notifications/NotificationsPage').then((module) => ({ default: module.NotificationsPage })));
+const PaymentLinksPage = lazy(() => import('@/features/payment-links/PaymentLinksPage').then((module) => ({ default: module.PaymentLinksPage })));
+const SettingsPage = lazy(() => import('@/features/settings/SettingsPage').then((module) => ({ default: module.SettingsPage })));
+
+function RouteLoadingFallback() {
+  return <div className="route-loading">Loading PayAssist...</div>;
+}
 
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -37,37 +40,47 @@ function App() {
   }, [theme]);
 
   return (
-    <MotionConfig reducedMotion="user">
-      <ReactLenis root options={{ lerp: 0.08, duration: 1.8, smoothWheel: true, syncTouch: false }}>
-        <a href="#main-content" style={{ position: 'absolute', top: '-100px', left: 0, zIndex: 9999, padding: '8px 16px', background: '#000', color: '#fff', borderRadius: '0 0 4px 0' }} onFocus={(event) => { event.currentTarget.style.top = '0'; }} onBlur={(event) => { event.currentTarget.style.top = '-100px'; }}>
-          Skip to main content
-        </a>
-        <CustomCursor />
-        <ThemeToggle theme={theme} onToggle={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))} />
-        <RupeeSpine />
-        <AmbientOrbs />
-        <SidebarNav />
-        <BottomNav />
-        <FloatingToasts />
-        <main id="main-content" style={{ position: 'relative', zIndex: 1 }}>
-          <Hero />
-          <Problem />
-          <LiveDemo />
-          <Features />
-          <HowItWorks />
-          <Reconcile />
-          <Stats />
-          <Voice />
-          <ApiGrid />
-          <Testimonials />
-          <Security />
-          <Roi />
-          <FinalCta />
-        </main>
-        <FooterSection />
-      </ReactLenis>
-    </MotionConfig>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Suspense fallback={<RouteLoadingFallback />}>
+          <Routes>
+            <Route
+              path="/"
+              element={<LandingPage theme={theme} onToggleTheme={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))} />}
+            />
+            <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/signup" element={<SignupPage />} />
+            <Route path="/auth/onboarding" element={<OnboardingFlow />} />
+
+            <Route
+              path="/app"
+              element={(
+                <ProtectedRoute>
+                  <AppShell />
+                </ProtectedRoute>
+              )}
+            >
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="verify" element={<VerifierPage />} />
+              <Route path="reconciliation" element={<ReconciliationPage />} />
+              <Route path="disputes" element={<DisputesPage />} />
+              <Route path="voice" element={<VoicePage />} />
+              <Route path="router-insights" element={<RouterInsightsPage />} />
+              <Route path="end-of-day" element={<EndOfDayPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
+              <Route path="notifications" element={<NotificationsPage />} />
+              <Route path="payment-links" element={<PaymentLinksPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+            </Route>
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+      <Toaster position="bottom-right" richColors />
+    </QueryClientProvider>
   );
 }
 
-export default App
+export default App;

@@ -1,19 +1,54 @@
-# React + TypeScript + Vite
+# PayAssist
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PayAssist is a two-surface project:
+- `/` is the existing marketing landing page.
+- `/auth/*` and `/app/*` are the merchant product application based on the technical PRDs in `features and design/`.
 
-Currently, two official plugins are available:
+Current implementation status:
+- Routed landing + app shell is live.
+- Core feature surfaces are implemented as interactive demo-backed workflows.
+- Firebase, Paytm, and Gemini client/server integration layers now exist with demo-safe fallbacks.
+- Express server scaffold exists under `server/`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Run
 
-## React Compiler
+```bash
+npm install
+npm run dev:client
+npm run dev:server
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Environment
 
-## Expanding the ESLint configuration
+Create a frontend `.env` file:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_API_BASE_URL=http://localhost:3001
+```
+
+Create a server `.env` file if you want to replace demo mode:
+
+```bash
+PORT=3001
+FRONTEND_URL=http://localhost:5173
+PAYTM_MERCHANT_ID_DEV=
+PAYTM_MERCHANT_KEY_DEV=
+PAYTM_WEBSITE_DEV=WEBSTAGING
+PAYTM_CHANNEL_ID_DEV=WEB
+PAYTM_INDUSTRY_TYPE_DEV=Retail
+GEMINI_API_KEY=
+FIREBASE_PROJECT_ID=
+FIREBASE_CLIENT_EMAIL=
+FIREBASE_PRIVATE_KEY=
+```
+
+Without these values, the app continues to work in demo fallback mode.
 
 ```js
 export default defineConfig([
