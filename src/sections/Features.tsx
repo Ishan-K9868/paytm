@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { FaBalanceScale, FaBrain, FaChartBar, FaChartLine, FaMicrophone, FaSearch } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { BorderReveal } from '../components/BorderReveal';
 
 function MiniVerifier() {
@@ -244,7 +245,7 @@ export function Features() {
                     <div style={{ width: '44px', height: '44px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${card.accent}18`, color: card.accent, fontSize: '18px', marginBottom: '18px' }}>{card.icon}</div>
                     <h3 style={{ color: 'var(--navy)', fontSize: '32px', lineHeight: 1.06, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
                     <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
-                    <a href={card.href} style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Open feature →</a>
+                    <Link to={card.href} style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Open feature →</Link>
                   </div>
                   <div className="feature-card-visual-wrap">{card.visual}</div>
                 </div>
@@ -254,7 +255,7 @@ export function Features() {
                   <div style={{ marginBottom: '20px' }}>{card.visual}</div>
                   <h3 style={{ color: 'var(--navy)', fontSize: card.key === 'verifier' || card.key === 'dispute' ? '34px' : '24px', lineHeight: 1.08, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
                   <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
-                  <a href={card.href} style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Open feature →</a>
+                   <Link to={card.href} style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Open feature →</Link>
                 </>
               )}
             </motion.article>

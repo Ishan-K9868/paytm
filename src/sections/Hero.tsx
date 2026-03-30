@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { useMouseParallax } from '../hooks/useMouseParallax';
 
 const PAYMENT_EVENTS = [
@@ -29,6 +30,7 @@ const APP_LINKS = [
   { label: 'Reconciliation', href: '/app/reconciliation' },
   { label: 'Disputes', href: '/app/disputes' },
   { label: 'Voice Copilot', href: '/app/voice' },
+  { label: 'Analytics', href: '/app/analytics' },
 ];
 
 export function Hero() {
@@ -68,6 +70,105 @@ export function Hero() {
         >
           {/* Left Column */}
           <div style={{ position: 'relative', zIndex: 2 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              style={{
+                marginBottom: '22px',
+                borderRadius: '24px',
+                border: '1px solid var(--border)',
+                background: 'rgba(255,255,255,0.78)',
+                backdropFilter: 'blur(14px)',
+                boxShadow: 'var(--shadow-md)',
+                overflow: 'hidden',
+                maxWidth: '920px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '16px',
+                  padding: '14px 18px',
+                  borderBottom: '1px solid var(--border)',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--cyan)' }}>
+                    Launch The Prototype
+                  </div>
+                  <div style={{ fontSize: '14px', color: 'var(--navy)', fontWeight: 700, marginTop: '4px' }}>
+                    Open the working merchant app directly from here
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                  <Link
+                    to="/auth/login"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '10px 16px',
+                      borderRadius: 'var(--radius-pill)',
+                      background: 'var(--navy)',
+                      color: 'white',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Merchant Login
+                  </Link>
+                  <Link
+                    to="/app/dashboard"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '10px 16px',
+                      borderRadius: 'var(--radius-pill)',
+                      background: 'var(--cyan)',
+                      color: 'var(--navy)',
+                      fontSize: '13px',
+                      fontWeight: 800,
+                      textDecoration: 'none',
+                      boxShadow: 'var(--shadow-cyan)',
+                    }}
+                  >
+                    Open App
+                  </Link>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', padding: '14px 18px' }}>
+                {APP_LINKS.map((item) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '11px 14px',
+                      borderRadius: 'var(--radius-pill)',
+                      background: 'var(--bg-card)',
+                      border: '1px solid var(--border)',
+                      color: 'var(--navy)',
+                      fontSize: '13px',
+                      fontWeight: 700,
+                      textDecoration: 'none',
+                      boxShadow: 'var(--shadow-sm)',
+                    }}
+                  >
+                    {item.label}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -236,9 +337,9 @@ export function Hero() {
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
                 {APP_LINKS.map((item) => (
-                  <a
+                  <Link
                     key={item.href}
-                    href={item.href}
+                    to={item.href}
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
@@ -256,7 +357,7 @@ export function Hero() {
                   >
                     {item.label}
                     <span aria-hidden="true">→</span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </motion.div>
