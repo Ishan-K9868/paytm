@@ -104,6 +104,61 @@ function MiniHealthBoard() {
   );
 }
 
+function MiniVoiceBoard() {
+  return (
+    <div style={{ display: 'grid', gap: '14px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '88px 1fr', gap: '14px', alignItems: 'center' }}>
+        <div style={{ borderRadius: '24px', background: 'linear-gradient(180deg, rgba(219,39,119,0.14), rgba(0,185,241,0.12))', border: '1px solid var(--border)', padding: '14px', height: '88px', display: 'flex', gap: '6px', alignItems: 'end', justifyContent: 'center' }}>
+          {[18, 30, 42, 24, 38, 22, 34].map((height, index) => (
+            <motion.div
+              key={index}
+              animate={{ height: [height, height + 12, height] }}
+              transition={{ duration: 1.2, repeat: Infinity, delay: index * 0.08 }}
+              style={{ width: '8px', borderRadius: '999px', background: index % 2 ? '#DB2777' : 'var(--cyan)' }}
+            />
+          ))}
+        </div>
+
+        <div style={{ display: 'grid', gap: '10px' }}>
+          <div style={{ background: 'var(--surface)', padding: '11px 14px', borderRadius: '999px', display: 'inline-flex', alignItems: 'center', width: 'fit-content', maxWidth: '100%', fontSize: '12px', border: '1px solid var(--border)', color: 'var(--text-body)' }}>
+            Aaj ka settlement kyon kam hai?
+          </div>
+
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {['Answer in 3 sec', 'Hindi + English', '92% confidence'].map((chip, index) => (
+              <span key={chip} style={{ padding: '7px 10px', borderRadius: '999px', background: index === 0 ? 'rgba(219,39,119,0.12)' : 'rgba(0,185,241,0.1)', color: index === 0 ? '#BE185D' : 'var(--navy)', fontSize: '11px', fontWeight: 700 }}>
+                {chip}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.25fr) minmax(180px, 0.75fr)', gap: '12px' }}>
+        <div style={{ borderRadius: '16px', background: 'var(--surface)', border: '1px solid var(--border)', padding: '14px' }}>
+          <div style={{ color: 'var(--navy)', fontWeight: 700, fontSize: '13px' }}>PayAssist heard</div>
+          <p style={{ marginTop: '8px', fontSize: '12px', lineHeight: 1.65, color: 'var(--text-body)' }}>
+            Settlement is lower because card failures are up 2.1% versus yesterday and one high-value order is still pending capture.
+          </p>
+        </div>
+
+        <div style={{ borderRadius: '16px', background: 'var(--surface-soft)', border: '1px solid var(--border)', padding: '14px', display: 'grid', gap: '8px' }}>
+          {[
+            { label: 'Language', value: 'Hindi' },
+            { label: 'Best reply mode', value: 'Voice note' },
+            { label: 'Next action', value: 'Open failures' },
+          ].map((item) => (
+            <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', fontSize: '12px' }}>
+              <span style={{ color: 'var(--text-muted)' }}>{item.label}</span>
+              <span style={{ color: 'var(--navy)', fontWeight: 700 }}>{item.value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Features() {
   const cards = [
     {
@@ -112,7 +167,7 @@ export function Features() {
       body: "No more calling customers back. No more 'let me check the app.' PayAssist pulls live status from Paytm rails and explains it in plain language.",
       accent: '#00B9F1',
       icon: <FaSearch />,
-      span: 'lg:col-span-2 lg:row-span-2',
+      gridClass: 'feature-span-8',
       visual: <MiniVerifier />,
     },
     {
@@ -121,7 +176,7 @@ export function Features() {
       body: "AI matches your collected amounts against settlements. Flags every rupee that's off.",
       accent: '#0891B2',
       icon: <FaChartBar />,
-      span: '',
+      gridClass: 'feature-span-4',
       visual: <MiniBars />,
     },
     {
@@ -130,7 +185,7 @@ export function Features() {
       body: 'Know which payment methods fail most for your merchant category. Optimize before losses compound.',
       accent: '#7C3AED',
       icon: <FaBrain />,
-      span: '',
+      gridClass: 'feature-span-4',
       visual: <div style={{ width: '92px', height: '92px', borderRadius: '50%', background: 'conic-gradient(var(--cyan) 0 68%, var(--navy) 68% 90%, var(--amber) 90% 100%)', margin: '0 auto' }} />,
     },
     {
@@ -139,7 +194,7 @@ export function Features() {
       body: 'PayAssist drafts your dispute response using exact transaction facts. Tracks RBI deadlines. Reminds you before expiry. You just review and approve.',
       accent: '#DC2626',
       icon: <FaBalanceScale />,
-      span: 'lg:col-span-2',
+      gridClass: 'feature-span-8',
       visual: <motion.div initial={{ opacity: 0.4 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ background: 'var(--surface)', borderRadius: '14px', padding: '14px', border: '1px solid var(--border)', fontSize: '13px', lineHeight: 1.6 }}>Dear Dispute Team, the merchant confirms the customer completed the purchase and received delivery on the same day...</motion.div>,
     },
     {
@@ -148,7 +203,8 @@ export function Features() {
       body: 'Track success rates, dispute ratios, settlement velocity - and the one recommendation that matters most this week.',
       accent: '#059669',
       icon: <FaChartLine />,
-      span: 'lg:row-span-2',
+      gridClass: 'feature-row-full',
+      layout: 'wide',
       visual: <MiniHealthBoard />,
     },
     {
@@ -157,8 +213,9 @@ export function Features() {
       body: 'Voice-first interface for the shop floor. No typing. No navigation. Just speak - and PayAssist explains your payment situation in plain language.',
       accent: '#DB2777',
       icon: <FaMicrophone />,
-      span: 'lg:col-span-2',
-      visual: <div><div style={{ display: 'flex', gap: '4px', alignItems: 'end', height: '56px' }}>{[18, 30, 42, 24, 38, 22, 34].map((height, index) => <motion.div key={index} animate={{ height: [height, height + 12, height] }} transition={{ duration: 1.2, repeat: Infinity, delay: index * 0.08 }} style={{ width: '10px', borderRadius: '999px', background: index % 2 ? '#DB2777' : 'var(--cyan)' }} />)}</div><div style={{ marginTop: '12px', background: 'var(--surface)', padding: '10px 12px', borderRadius: '999px', display: 'inline-block', fontSize: '12px', border: '1px solid var(--border)' }}>Aaj ka settlement kyon kam hai?</div></div>,
+      gridClass: 'feature-row-full',
+      layout: 'wide',
+      visual: <MiniVoiceBoard />,
     },
   ];
 
@@ -172,14 +229,28 @@ export function Features() {
           <em style={{ color: 'var(--cyan)' }}>Not the pretty slides.</em>
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px', marginTop: '48px', gridAutoFlow: 'row dense' }} className="lg:grid lg:grid-cols-3">
+        <div className="features-grid">
           {cards.map((card, index) => (
-            <motion.article key={card.key} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: index * 0.06, duration: 0.6 }} className={card.span} style={{ background: 'var(--bg-card)', borderRadius: '24px', padding: '24px', borderLeft: `3px solid ${card.accent}`, boxShadow: 'var(--shadow-sm)', transition: 'transform 0.3s var(--ease-spring), box-shadow 0.3s ease', height: '100%' }}>
-              <div style={{ width: '44px', height: '44px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${card.accent}18`, color: card.accent, fontSize: '18px', marginBottom: '18px' }}>{card.icon}</div>
-              <div style={{ marginBottom: '20px' }}>{card.visual}</div>
-              <h3 style={{ color: 'var(--navy)', fontSize: card.key === 'verifier' || card.key === 'dispute' ? '34px' : '24px', lineHeight: 1.08, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
-              <a href="https://business.paytm.com/docs/api/" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Learn more →</a>
+            <motion.article key={card.key} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: index * 0.06, duration: 0.6 }} className={`feature-card ${card.gridClass ?? ''} ${card.layout === 'wide' ? 'feature-card-wide' : ''}`.trim()} style={{ background: 'var(--bg-card)', borderRadius: '24px', padding: '24px', borderLeft: `3px solid ${card.accent}`, boxShadow: 'var(--shadow-sm)', transition: 'transform 0.3s var(--ease-spring), box-shadow 0.3s ease', height: '100%' }}>
+              {card.layout === 'wide' ? (
+                <div className="feature-card-wide-shell">
+                  <div className="feature-card-copy">
+                    <div style={{ width: '44px', height: '44px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${card.accent}18`, color: card.accent, fontSize: '18px', marginBottom: '18px' }}>{card.icon}</div>
+                    <h3 style={{ color: 'var(--navy)', fontSize: '32px', lineHeight: 1.06, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
+                    <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
+                    <a href="https://business.paytm.com/docs/api/" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Learn more →</a>
+                  </div>
+                  <div className="feature-card-visual-wrap">{card.visual}</div>
+                </div>
+              ) : (
+                <>
+                  <div style={{ width: '44px', height: '44px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: `${card.accent}18`, color: card.accent, fontSize: '18px', marginBottom: '18px' }}>{card.icon}</div>
+                  <div style={{ marginBottom: '20px' }}>{card.visual}</div>
+                  <h3 style={{ color: 'var(--navy)', fontSize: card.key === 'verifier' || card.key === 'dispute' ? '34px' : '24px', lineHeight: 1.08, fontFamily: 'var(--font-display)' }}>{card.title}</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '15px', marginTop: '12px' }}>{card.body}</p>
+                  <a href="https://business.paytm.com/docs/api/" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginTop: '16px', color: 'var(--navy)', fontWeight: 700, textDecoration: 'none' }}>Learn more →</a>
+                </>
+              )}
             </motion.article>
           ))}
         </div>
