@@ -28,7 +28,7 @@ export function Security() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }} className="sm:grid sm:grid-cols-2">
             {SECURITY_FEATURES.map((item, index) => (
-              <motion.article key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: index * 0.05 }} style={{ background: 'white', boxShadow: 'var(--shadow-sm)', borderRadius: '18px', padding: '18px', borderLeft: '3px solid #059669' }}>
+              <motion.article key={item.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: index * 0.05 }} style={{ background: 'var(--surface)', boxShadow: 'var(--shadow-sm)', borderRadius: '18px', padding: '18px', borderLeft: '3px solid #059669' }}>
                 <div style={{ fontSize: '24px' }}>{item.icon}</div>
                 <div style={{ color: 'var(--navy)', fontWeight: 700, marginTop: '12px' }}>{item.title}</div>
                 <div style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '8px' }}>{item.desc}</div>

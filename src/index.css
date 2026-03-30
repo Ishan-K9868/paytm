@@ -35,6 +35,10 @@
   --shadow-lg: 0 20px 60px rgba(0, 46, 110, 0.16);
   --shadow-cyan: 0 8px 32px rgba(0, 185, 241, 0.25);
   --shadow-amber: 0 8px 24px rgba(245, 166, 35, 0.2);
+  --surface: #FFFFFF;
+  --surface-soft: #F8FBFF;
+  --surface-warm: #FFF7ED;
+  --surface-overlay: rgba(250, 251, 255, 0.82);
   /* Typography */
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-body: 'General Sans', system-ui, sans-serif;
@@ -61,6 +65,28 @@
   --cursor-z-index: 9999;
 }
 
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --bg-base: #121B27;
+  --bg-card: #182536;
+  --bg-card-hover: #203147;
+  --bg-dark: #0C1320;
+  --text-primary: #E7F0FF;
+  --text-body: #D8E3F6;
+  --text-muted: #94A9C9;
+  --text-on-dark: #F2F7FF;
+  --text-on-dark-muted: #A4B7D6;
+  --border: #2A3A53;
+  --border-strong: #3F587B;
+  --shadow-sm: 0 2px 8px rgba(7, 12, 22, 0.25);
+  --shadow-md: 0 8px 24px rgba(7, 12, 22, 0.34);
+  --shadow-lg: 0 20px 60px rgba(7, 12, 22, 0.42);
+  --surface: #162131;
+  --surface-soft: #1B293B;
+  --surface-warm: #2B2430;
+  --surface-overlay: rgba(22, 33, 49, 0.84);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -79,6 +105,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 #root {

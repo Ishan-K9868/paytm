@@ -74,12 +74,12 @@ export function SidebarNav() {
           alignItems: 'center',
           gap: '6px',
           padding: '12px 8px',
-          background: 'rgba(250, 251, 255, 0.82)',
+          background: 'var(--surface-overlay)',
           backdropFilter: 'blur(20px) saturate(180%)',
           WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          border: '1px solid rgba(0, 46, 110, 0.1)',
+          border: '1px solid var(--border)',
           borderRadius: '999px',
-          boxShadow: '0 8px 32px rgba(0, 46, 110, 0.12), 0 2px 8px rgba(0, 46, 110, 0.06)',
+          boxShadow: 'var(--shadow-md)',
         }}
       >
         {NAV_ITEMS.map((item) => {

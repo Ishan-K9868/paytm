@@ -21,10 +21,10 @@ export function BottomNav() {
         gap: '8px',
         padding: '10px',
         borderRadius: '999px',
-        background: 'rgba(250, 251, 255, 0.88)',
+        background: 'var(--surface-overlay)',
         backdropFilter: 'blur(18px) saturate(180%)',
-        border: '1px solid rgba(0, 46, 110, 0.12)',
-        boxShadow: '0 8px 32px rgba(0, 46, 110, 0.12)',
+        border: '1px solid var(--border)',
+        boxShadow: 'var(--shadow-md)',
       }}
     >
       {NAV_ITEMS.map((item) => (

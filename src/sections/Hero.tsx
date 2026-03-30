@@ -244,7 +244,7 @@ export function Hero() {
                 style={{
                   width: '280px',
                   height: '580px',
-                  background: 'white',
+                  background: 'var(--surface)',
                   borderRadius: '44px',
                   border: '8px solid var(--navy)',
                   boxShadow: `
@@ -282,7 +282,7 @@ export function Hero() {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ delay: i * 0.1 }}
                         style={{
-                          background: 'white',
+                          background: 'var(--surface)',
                           border: '1px solid var(--border)',
                           borderLeft: `3px solid ${event.color}`,
                           borderRadius: '8px',
@@ -356,7 +356,7 @@ export function Hero() {
                     ...(i === 2 && { bottom: '30%', left: '-130px' }),
                     ...(i === 3 && { bottom: '5%', left: '-120px' }),
                     width: '160px',
-                    background: 'white',
+                    background: 'var(--surface)',
                     borderRadius: '12px',
                     padding: '10px 14px',
                     boxShadow: 'var(--shadow-lg)',

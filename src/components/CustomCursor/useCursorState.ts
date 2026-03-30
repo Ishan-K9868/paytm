@@ -8,7 +8,12 @@ interface CursorStateReturn {
 }
 
 export function useCursorState(): CursorStateReturn {
-  const [state, setState] = useState<CursorState>('idle');
+  const [state, setState] = useState<CursorState>(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+      return 'hidden';
+    }
+    return 'idle';
+  });
   const [isDark, setIsDark] = useState(false);
   const isMouseDown = useRef(false);
 
@@ -37,7 +42,6 @@ export function useCursorState(): CursorStateReturn {
   useEffect(() => {
     const media = window.matchMedia('(pointer: coarse)');
     if (media.matches) {
-      setState('hidden');
       return;
     }
 

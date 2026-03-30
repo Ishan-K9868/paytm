@@ -64,7 +64,7 @@ export function Roi() {
         </h2>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px', marginTop: '34px' }} className="lg:grid lg:grid-cols-[0.9fr_1.1fr]">
-          <div style={{ background: 'white', borderRadius: '24px', border: '1px solid var(--border)', padding: '24px', boxShadow: 'var(--shadow-md)' }}>
+          <div style={{ background: 'var(--surface)', borderRadius: '24px', border: '1px solid var(--border)', padding: '24px', boxShadow: 'var(--shadow-md)' }}>
             {[
               { id: 'daily_transactions', label: 'How many payment transactions per day?', min: 10, max: 500, step: 10, unit: 'transactions', value: inputs.daily_transactions },
               { id: 'avg_transaction', label: 'Average transaction amount?', min: 100, max: 5000, step: 100, unit: '₹', prefix: true, value: inputs.avg_transaction },
@@ -82,15 +82,15 @@ export function Roi() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }} className="sm:grid sm:grid-cols-2">
-            <div style={{ background: 'white', borderRadius: '22px', border: '1px solid var(--border)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ background: 'var(--surface)', borderRadius: '22px', border: '1px solid var(--border)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
               <div style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Recovered from disputes per month</div>
               <div style={{ color: 'var(--navy)', fontSize: '36px', fontFamily: 'var(--font-display)', marginTop: '10px' }}><SpringNumber value={outputs.disputeRecovery} format={(value) => `₹${Math.round(value).toLocaleString('en-IN')}`} /></div>
             </div>
-            <div style={{ background: 'white', borderRadius: '22px', border: '1px solid var(--border)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ background: 'var(--surface)', borderRadius: '22px', border: '1px solid var(--border)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
               <div style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Time saved on reconciliation per month</div>
               <div style={{ color: 'var(--navy)', fontSize: '36px', fontFamily: 'var(--font-display)', marginTop: '10px' }}><SpringNumber value={outputs.timeSaved} format={(value) => `${Math.round(value)} min`} /></div>
             </div>
-            <div style={{ background: 'white', borderRadius: '22px', border: '1px solid var(--border)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
+            <div style={{ background: 'var(--surface)', borderRadius: '22px', border: '1px solid var(--border)', padding: '22px', boxShadow: 'var(--shadow-sm)' }}>
               <div style={{ color: 'var(--text-muted)', fontSize: '13px' }}>Value of your time saved</div>
               <div style={{ color: 'var(--navy)', fontSize: '36px', fontFamily: 'var(--font-display)', marginTop: '10px' }}><SpringNumber value={outputs.moneyFromTime} format={(value) => `₹${Math.round(value).toLocaleString('en-IN')}`} /></div>
             </div>

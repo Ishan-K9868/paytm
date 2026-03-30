@@ -67,7 +67,7 @@ export function FloatingToasts() {
             transition={{ duration: 0.3, ease: [0.19, 1, 0.22, 1] }}
             style={{
               width: '280px',
-              background: 'white',
+              background: 'var(--surface)',
               borderRadius: '12px',
               padding: '12px 16px',
               boxShadow: 'var(--shadow-md)',

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { ReactLenis } from 'lenis/react';
 import { AmbientOrbs } from './components/AmbientOrbs';
@@ -6,6 +7,7 @@ import { CustomCursor } from './components/CustomCursor';
 import { FloatingToasts } from './components/FloatingToasts';
 import { RupeeSpine } from './components/RupeeSpine';
 import { SidebarNav } from './components/SidebarNav';
+import { ThemeToggle } from './components/ThemeToggle';
 import { ApiGrid } from './sections/ApiGrid';
 import { Features } from './sections/Features';
 import { FinalCta } from './sections/FinalCta';
@@ -22,6 +24,18 @@ import { Testimonials } from './sections/Testimonials';
 import { Voice } from './sections/Voice';
 
 function App() {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'light';
+    const saved = window.localStorage.getItem('payassist-theme');
+    return saved === 'dark' || saved === 'light' ? saved : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem('payassist-theme', theme);
+  }, [theme]);
+
   return (
     <MotionConfig reducedMotion="user">
       <ReactLenis root options={{ lerp: 0.08, duration: 1.8, smoothWheel: true, syncTouch: false }}>
@@ -29,6 +43,7 @@ function App() {
           Skip to main content
         </a>
         <CustomCursor />
+        <ThemeToggle theme={theme} onToggle={() => setTheme((current) => (current === 'light' ? 'dark' : 'light'))} />
         <RupeeSpine />
         <AmbientOrbs />
         <SidebarNav />

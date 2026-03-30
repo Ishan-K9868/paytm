@@ -127,7 +127,7 @@ export function LiveDemo() {
                 <button
                   key={tab.key}
                   onClick={() => setScenario(tab.key as Scenario)}
-                  style={{ borderRadius: '999px', border: scenario === tab.key ? '1px solid var(--cyan)' : '1px solid var(--border)', background: scenario === tab.key ? 'var(--cyan-08)' : 'white', color: 'var(--navy)', padding: '10px 14px', cursor: 'pointer', fontWeight: 600 }}
+                  style={{ borderRadius: '999px', border: scenario === tab.key ? '1px solid var(--cyan)' : '1px solid var(--border)', background: scenario === tab.key ? 'var(--cyan-08)' : 'var(--surface)', color: 'var(--navy)', padding: '10px 14px', cursor: 'pointer', fontWeight: 600 }}
                 >
                   {tab.icon} {tab.label}
                 </button>
@@ -135,7 +135,7 @@ export function LiveDemo() {
             </div>
           </div>
 
-          <div style={{ background: 'white', border: '1px solid var(--border)', borderRadius: '24px', padding: '28px', boxShadow: 'var(--shadow-md)', minHeight: '520px' }}>
+          <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '24px', padding: '28px', boxShadow: 'var(--shadow-md)', minHeight: '520px' }}>
             <AnimatePresence mode="wait">
               {demoState === 'idle' && (
                 <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', color: 'var(--text-muted)' }}>
@@ -231,7 +231,7 @@ export function LiveDemo() {
                       ))}
                     </div>
 
-                    <div style={{ borderRadius: '14px', background: '#F8FBFF', border: '1px solid var(--border)', padding: '16px' }}>
+                    <div style={{ borderRadius: '14px', background: 'var(--surface-soft)', border: '1px solid var(--border)', padding: '16px' }}>
                       <div style={{ fontWeight: 700, color: 'var(--navy)' }}>Next best actions</div>
                       <div style={{ display: 'grid', gap: '10px', marginTop: '12px' }}>
                         {[
@@ -249,7 +249,7 @@ export function LiveDemo() {
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '14px', marginTop: '14px' }}>
-                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'white' }}>
+                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'var(--surface)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                         <div style={{ fontWeight: 700, color: 'var(--navy)' }}>Settlement match table</div>
                         <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Today</div>
@@ -270,7 +270,7 @@ export function LiveDemo() {
                       </div>
                     </div>
 
-                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: '#F8FBFF' }}>
+                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'var(--surface-soft)' }}>
                       <div style={{ fontWeight: 700, color: 'var(--navy)' }}>7-day settlement trend</div>
                       <div style={{ display: 'flex', alignItems: 'end', gap: '6px', height: '96px', marginTop: '14px' }}>
                         {[68, 74, 64, 80, 72, 58, 76].map((bar, index) => (
@@ -285,7 +285,7 @@ export function LiveDemo() {
 
                   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '12px' }}>
                     <button style={{ borderRadius: '999px', border: 'none', background: 'var(--navy)', color: 'white', padding: '12px 18px', cursor: 'pointer' }}>Export reconciled report</button>
-                    <button style={{ borderRadius: '999px', border: '1px solid var(--border)', background: 'white', color: 'var(--navy)', padding: '12px 18px', cursor: 'pointer' }}>Raise MDR dispute</button>
+                    <button style={{ borderRadius: '999px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--navy)', padding: '12px 18px', cursor: 'pointer' }}>Raise MDR dispute</button>
                   </div>
                 </motion.div>
               )}
@@ -309,14 +309,14 @@ export function LiveDemo() {
                           { label: 'Merchant risk', value: 'Medium', tone: 'var(--amber)' },
                           { label: 'Status checks', value: '3 run', tone: 'var(--cyan)' },
                         ]).map((card) => (
-                      <div key={card.label} style={{ background: scenario === 'dispute' ? '#FFF7ED' : '#F8FBFF', borderRadius: '12px', padding: '14px', border: '1px solid var(--border)' }}>
+                      <div key={card.label} style={{ background: scenario === 'dispute' ? 'var(--surface-warm)' : 'var(--surface-soft)', borderRadius: '12px', padding: '14px', border: '1px solid var(--border)' }}>
                         <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{card.label}</div>
                         <div className="tabular-nums" style={{ marginTop: '8px', color: card.tone, fontSize: '22px', fontWeight: 800 }}>{card.value}</div>
                       </div>
                     ))}
                   </div>
 
-                  <div style={{ borderRadius: '14px', background: '#FFF7ED', border: '1px solid #FED7AA', padding: '18px', marginBottom: '14px' }}>
+                  <div style={{ borderRadius: '14px', background: 'var(--surface-warm)', border: '1px solid rgba(245,166,35,0.24)', padding: '18px', marginBottom: '14px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'center' }}>
                       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-muted)' }}>draft_response.txt</div>
                       <div style={{ fontSize: '12px', color: 'var(--amber)', fontWeight: 700 }}>Generated in 4.2s</div>
@@ -337,7 +337,7 @@ export function LiveDemo() {
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'white' }}>
+                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'var(--surface)' }}>
                       <div style={{ fontWeight: 700, color: 'var(--navy)' }}>{scenario === 'dispute' ? 'RBI timer + filing status' : 'Escalation checklist'}</div>
                       <div style={{ display: 'grid', gap: '10px', marginTop: '12px' }}>
                         {(scenario === 'dispute'
@@ -352,7 +352,7 @@ export function LiveDemo() {
                       </div>
                     </div>
 
-                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: '#F8FBFF' }}>
+                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'var(--surface-soft)' }}>
                       <div style={{ fontWeight: 700, color: 'var(--navy)' }}>Merchant-ready explanation</div>
                       <p style={{ marginTop: '10px', fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.7 }}>
                         {scenario === 'dispute'
@@ -363,7 +363,7 @@ export function LiveDemo() {
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '14px', marginTop: '14px' }}>
-                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'white' }}>
+                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: 'var(--surface)' }}>
                       <div style={{ fontWeight: 700, color: 'var(--navy)' }}>Evidence confidence breakdown</div>
                       <div style={{ display: 'grid', gap: '10px', marginTop: '12px' }}>
                         {[
@@ -384,7 +384,7 @@ export function LiveDemo() {
                       </div>
                     </div>
 
-                    <div style={{ borderRadius: '14px', border: '1px solid var(--border)', padding: '16px', background: '#FFF7ED' }}>
+                    <div style={{ borderRadius: '14px', border: '1px solid rgba(245,166,35,0.24)', padding: '16px', background: 'var(--surface-warm)' }}>
                       <div style={{ fontWeight: 700, color: 'var(--navy)' }}>Submission timeline</div>
                       <div style={{ display: 'grid', gap: '12px', marginTop: '12px' }}>
                         {['Draft generated', 'Evidence attached', 'Merchant review pending', 'File before 11:59 PM'].map((step, index) => (
@@ -399,7 +399,7 @@ export function LiveDemo() {
 
                   <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginTop: '14px' }}>
                     <button style={{ borderRadius: '999px', border: 'none', background: 'var(--navy)', color: 'white', padding: '12px 18px', cursor: 'pointer' }}>{scenario === 'dispute' ? 'Submit dispute draft' : 'Escalate transaction'}</button>
-                    <button style={{ borderRadius: '999px', border: '1px solid var(--border)', background: 'white', color: 'var(--navy)', padding: '12px 18px', cursor: 'pointer' }}>Download evidence pack</button>
+                    <button style={{ borderRadius: '999px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--navy)', padding: '12px 18px', cursor: 'pointer' }}>Download evidence pack</button>
                   </div>
                 </motion.div>
               )}

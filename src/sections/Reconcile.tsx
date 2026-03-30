@@ -34,9 +34,9 @@ export function Reconcile() {
           ref={ref}
           onMouseMove={(event) => event.buttons === 1 && updateDivider(event.clientX)}
           onTouchMove={(event) => updateDivider(event.touches[0].clientX)}
-          style={{ position: 'relative', marginTop: '40px', height: '520px', borderRadius: '28px', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', background: 'white', cursor: 'ew-resize' }}
+          style={{ position: 'relative', marginTop: '40px', height: '520px', borderRadius: '28px', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: 'var(--shadow-lg)', background: 'var(--surface)', cursor: 'ew-resize' }}
         >
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%)' }} />
           <div style={{ position: 'absolute', inset: 0, padding: '28px', clipPath: `inset(0 ${100 - dividerX}% 0 0)` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
               <div>
@@ -68,7 +68,7 @@ export function Reconcile() {
                   { label: 'Settled', value: '₹12,060' },
                   { label: 'Anomalies', value: '2 flagged' },
                 ].map((item) => (
-                  <div key={item.label} style={{ background: 'white', borderRadius: '14px', padding: '14px' }}>
+                  <div key={item.label} style={{ background: 'var(--surface)', borderRadius: '14px', padding: '14px' }}>
                     <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{item.label}</div>
                     <div style={{ fontSize: '24px', color: 'var(--navy)', fontWeight: 800, marginTop: '8px' }}>{item.value}</div>
                   </div>
@@ -83,15 +83,15 @@ export function Reconcile() {
           <div
             onMouseDown={(event) => updateDivider(event.clientX)}
             onTouchStart={(event) => updateDivider(event.touches[0].clientX)}
-            style={{ position: 'absolute', top: 0, bottom: 0, left: `${dividerX}%`, width: '2px', background: 'white', boxShadow: '0 0 0 1px rgba(0,46,110,0.18)', transform: 'translateX(-50%)' }}
+            style={{ position: 'absolute', top: 0, bottom: 0, left: `${dividerX}%`, width: '2px', background: 'var(--surface)', boxShadow: '0 0 0 1px rgba(0,46,110,0.18)', transform: 'translateX(-50%)' }}
           >
-            <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: '54px', height: '54px', borderRadius: '999px', background: 'white', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--navy)', fontWeight: 700 }}>↔</div>
+            <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', width: '54px', height: '54px', borderRadius: '999px', background: 'var(--surface)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--navy)', fontWeight: 700 }}>↔</div>
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '14px', marginTop: '24px' }} className="lg:grid lg:grid-cols-3">
           {ANOMALIES.map((anomaly) => (
-            <button key={anomaly.type} onClick={() => setExpanded(expanded === anomaly.type ? null : anomaly.type)} style={{ textAlign: 'left', background: 'white', border: '1px solid var(--border)', borderLeft: `3px solid ${anomaly.color}`, borderRadius: '18px', padding: '16px', cursor: 'pointer', boxShadow: 'var(--shadow-sm)' }}>
+            <button key={anomaly.type} onClick={() => setExpanded(expanded === anomaly.type ? null : anomaly.type)} style={{ textAlign: 'left', background: 'var(--surface)', border: '1px solid var(--border)', borderLeft: `3px solid ${anomaly.color}`, borderRadius: '18px', padding: '16px', cursor: 'pointer', boxShadow: 'var(--shadow-sm)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{ width: '8px', height: '8px', borderRadius: '50%', background: anomaly.color }} /><span style={{ color: 'var(--navy)', fontWeight: 700 }}>{anomaly.type}</span></div>
               <div style={{ color: 'var(--text-muted)', fontSize: '13px', marginTop: '8px' }}>{anomaly.desc}</div>
               {expanded === anomaly.type && <div style={{ color: 'var(--text-body)', fontSize: '13px', marginTop: '10px' }}>{anomaly.detail}</div>}

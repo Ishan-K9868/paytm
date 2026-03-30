@@ -34,7 +34,7 @@ export function ApiGrid() {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }} className="sm:grid sm:grid-cols-2">
             {APIS.map((api, index) => (
-              <motion.article key={api.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: index * 0.05 }} style={{ minHeight: '160px', background: 'white', border: '1px solid var(--border)', borderRadius: '18px', padding: '18px', boxShadow: 'var(--shadow-sm)' }}>
+              <motion.article key={api.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ delay: index * 0.05 }} style={{ minHeight: '160px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: '18px', padding: '18px', boxShadow: 'var(--shadow-sm)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                   <div style={{ width: '38px', height: '38px', borderRadius: '12px', background: 'var(--bg-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--navy)' }}>{api.icon}</div>
                   <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: api.status === 'integrated' ? '#16A34A' : 'var(--cyan)' }} />
