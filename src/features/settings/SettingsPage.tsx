@@ -3,8 +3,17 @@ import { AlertTriangle, ShieldCheck, Volume2 } from 'lucide-react';
 import { Button, Card, Input, Modal, Select } from '@/components/ui';
 import { PageIntro } from '@/features/shared/PageIntro';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMerchantStore } from '@/store/useMerchantStore';
 import { useVoiceStore } from '@/store/useVoiceStore';
+
+interface CopilotConfigState {
+  copilotLanguage: 'english' | 'hindi' | 'bengali' | 'telugu';
+  procurementAutoLimit: number;
+  fraudShieldMode: 'strict' | 'smart';
+  allowAccountAggregator: boolean;
+  allowSupplierPayments: boolean;
+}
 
 export function SettingsPage() {
   const profile = useMerchantStore((state) => state.profile);
@@ -20,6 +29,13 @@ export function SettingsPage() {
   const [phoneNumber, setPhoneNumber] = useState(profile?.phoneNumber ?? '');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState('');
+  const [copilotConfig, setCopilotConfig] = useLocalStorage<CopilotConfigState>('payassist-copilot-config', {
+    copilotLanguage: 'hindi',
+    procurementAutoLimit: 5000,
+    fraudShieldMode: 'smart',
+    allowAccountAggregator: false,
+    allowSupplierPayments: false,
+  });
   const debouncedName = useDebounce(businessName, 500);
   const debouncedCity = useDebounce(city, 500);
   const debouncedPhone = useDebounce(phoneNumber, 500);
@@ -84,6 +100,59 @@ export function SettingsPage() {
             <label><span className="auth-label">Default response language</span><Select onChange={(event) => setLanguage(event.target.value as 'hi' | 'en' | 'auto')} value={language}><option value="auto">Auto-detect</option><option value="hi">Hindi</option><option value="en">English</option></Select></label>
             <label><span className="auth-label">Voice speed</span><Select onChange={(event) => setSpeed(Number(event.target.value) as 0.7 | 1 | 1.3)} value={String(speed)}><option value="0.7">Slow</option><option value="1">Normal</option><option value="1.3">Fast</option></Select></label>
             <div className="dashboard-row-meta"><Volume2 size={14} style={{ verticalAlign: 'middle', marginRight: 6 }} /> Voice preferences are stored in local app state for now.</div>
+          </div>
+        </Card>
+
+        <Card accent="navy" className="settings-section">
+          <div className="settings-section-header"><div className="settings-section-title">Copilot Swarm Configuration</div><div className="settings-section-subtitle">Control autonomy boundaries for procurement, fraud alerts, and payment actions.</div></div>
+          <div className="settings-section-body auth-form-grid">
+            <label>
+              <span className="auth-label">Primary copilot language</span>
+              <Select
+                value={copilotConfig.copilotLanguage}
+                onChange={(event) => setCopilotConfig((current) => ({ ...current, copilotLanguage: event.target.value as CopilotConfigState['copilotLanguage'] }))}
+              >
+                <option value="english">English</option>
+                <option value="hindi">Hindi</option>
+                <option value="bengali">Bengali</option>
+                <option value="telugu">Telugu</option>
+              </Select>
+            </label>
+
+            <label>
+              <span className="auth-label">Swarm procurement auto-approval limit (Rs.)</span>
+              <Input
+                className="input"
+                type="range"
+                min={1000}
+                max={25000}
+                step={500}
+                value={copilotConfig.procurementAutoLimit}
+                onChange={(event) => setCopilotConfig((current) => ({ ...current, procurementAutoLimit: Number(event.target.value) }))}
+              />
+              <div className="dashboard-row-meta">Current limit: Rs. {copilotConfig.procurementAutoLimit.toLocaleString('en-IN')}</div>
+            </label>
+
+            <label>
+              <span className="auth-label">Fraud Shield sensitivity</span>
+              <Select
+                value={copilotConfig.fraudShieldMode}
+                onChange={(event) => setCopilotConfig((current) => ({ ...current, fraudShieldMode: event.target.value as CopilotConfigState['fraudShieldMode'] }))}
+              >
+                <option value="strict">Strict Mode</option>
+                <option value="smart">Smart Mode</option>
+              </Select>
+            </label>
+
+            <div className="setting-row">
+              <div><div className="setting-label">Authorize Account Aggregator access</div><div className="setting-desc">Improves continuous underwriting and credit catalyst confidence.</div></div>
+              <button className={`toggle ${copilotConfig.allowAccountAggregator ? 'active' : ''}`} onClick={() => setCopilotConfig((current) => ({ ...current, allowAccountAggregator: !current.allowAccountAggregator }))} type="button"><span className="toggle-thumb" /></button>
+            </div>
+
+            <div className="setting-row">
+              <div><div className="setting-label">Allow supplier payment initiation</div><div className="setting-desc">Lets Voice-Negotiator execute approved supplier payouts directly.</div></div>
+              <button className={`toggle ${copilotConfig.allowSupplierPayments ? 'active' : ''}`} onClick={() => setCopilotConfig((current) => ({ ...current, allowSupplierPayments: !current.allowSupplierPayments }))} type="button"><span className="toggle-thumb" /></button>
+            </div>
           </div>
         </Card>
 

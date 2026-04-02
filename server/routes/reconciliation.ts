@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { authenticate } from '../middleware/auth';
-import { demoReconciliationSummary } from '../../src/data/demoAppData';
+import { authenticate } from '../middleware/auth.ts';
+import { demoReconciliationSummary } from '../../src/data/demoAppData.ts';
 
 export const reconciliationRoutes = Router();
 

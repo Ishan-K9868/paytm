@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
 import {
   BarChart3,
+  Brain,
+  CircleDollarSign,
   GitMerge,
   LayoutDashboard,
   Link2,
@@ -9,6 +11,7 @@ import {
   Scale,
   Search,
   Settings,
+  Sparkles,
   Sunset,
   Zap,
 } from 'lucide-react';
@@ -33,6 +36,7 @@ const navConfig: Array<{ section: string; items: NavItemConfig[] }> = [
     items: [
       { icon: LayoutDashboard, label: 'Dashboard', path: '/app/dashboard' },
       { icon: BarChart3, label: 'Analytics', path: '/app/analytics' },
+      { icon: Sparkles, label: 'Action Feed', path: '/app/action-feed' },
     ],
   },
   {
@@ -49,6 +53,15 @@ const navConfig: Array<{ section: string; items: NavItemConfig[] }> = [
       { icon: GitMerge, label: 'Reconciliation', path: '/app/reconciliation' },
       { icon: Sunset, label: 'End of Day', path: '/app/end-of-day' },
       { icon: Scale, label: 'Disputes', path: '/app/disputes' },
+    ],
+  },
+  {
+    section: 'AI Modules',
+    items: [
+      { icon: CircleDollarSign, label: 'Auto-Sweep Router', path: '/app/auto-sweep' },
+      { icon: GitMerge, label: 'Vyapar-Setu', path: '/app/vyapar-setu' },
+      { icon: Mic, label: 'Voice Negotiator', path: '/app/voice-negotiator', voice: true },
+      { icon: Brain, label: 'GenAI Ad Engine', path: '/app/genai-ad-engine' },
     ],
   },
   {
@@ -81,13 +94,13 @@ export function Sidebar({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
   return (
     <aside className={`app-sidebar sidebar ${isOpen ? 'open' : ''}`.trim()}>
-      <div className="app-sidebar-brand">
+      <Link className="app-sidebar-brand" onClick={onClose} to="/">
         <div className="app-logo-mark">P</div>
         <div>
           <div className="app-logo-name">PayAssist</div>
           <div className="app-badge">built on Paytm</div>
         </div>
-      </div>
+      </Link>
 
       <div className="app-merchant-card">
         <div className="app-merchant-avatar">{profile?.businessName.slice(0, 1) ?? 'P'}</div>

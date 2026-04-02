@@ -22,6 +22,11 @@ const AnalyticsPage = lazy(() => import('@/features/analytics/AnalyticsPage').th
 const NotificationsPage = lazy(() => import('@/features/notifications/NotificationsPage').then((module) => ({ default: module.NotificationsPage })));
 const PaymentLinksPage = lazy(() => import('@/features/payment-links/PaymentLinksPage').then((module) => ({ default: module.PaymentLinksPage })));
 const SettingsPage = lazy(() => import('@/features/settings/SettingsPage').then((module) => ({ default: module.SettingsPage })));
+const ActionFeedPage = lazy(() => import('@/features/action-feed/ActionFeedPage').then((module) => ({ default: module.ActionFeedPage })));
+const AutoSweepPage = lazy(() => import('@/features/auto-sweep/AutoSweepPage').then((module) => ({ default: module.AutoSweepPage })));
+const VyaparSetuPage = lazy(() => import('@/features/vyapar-setu/VyaparSetuPage').then((module) => ({ default: module.VyaparSetuPage })));
+const VoiceNegotiatorPage = lazy(() => import('@/features/voice-negotiator/VoiceNegotiatorPage').then((module) => ({ default: module.VoiceNegotiatorPage })));
+const GenAIAdsPage = lazy(() => import('@/features/genai-ads/GenAIAdsPage').then((module) => ({ default: module.GenAIAdsPage })));
 
 function RouteLoadingFallback() {
   return <div className="route-loading">Loading PayAssist...</div>;
@@ -74,6 +79,11 @@ function App() {
               <Route path="notifications" element={<NotificationsPage />} />
               <Route path="payment-links" element={<PaymentLinksPage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="action-feed" element={<ActionFeedPage />} />
+              <Route path="auto-sweep" element={<AutoSweepPage />} />
+              <Route path="vyapar-setu" element={<VyaparSetuPage />} />
+              <Route path="voice-negotiator" element={<VoiceNegotiatorPage />} />
+              <Route path="genai-ad-engine" element={<GenAIAdsPage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -16,6 +16,11 @@ const pageTitles: Record<string, string> = {
   '/app/notifications': 'Notifications',
   '/app/payment-links': 'Payment Links',
   '/app/settings': 'Settings',
+  '/app/action-feed': 'Action Feed',
+  '/app/auto-sweep': 'Auto-Sweep Router',
+  '/app/vyapar-setu': 'Paytm Vyapar-Setu',
+  '/app/voice-negotiator': 'Voice Negotiator',
+  '/app/genai-ad-engine': 'GenAI Ad Engine',
 };
 
 export function TopBar({ onOpenSidebar }: { onOpenSidebar: () => void }) {

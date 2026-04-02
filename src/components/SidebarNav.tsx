@@ -14,6 +14,7 @@ const NAV_ITEMS = [
   { id: 'testimonials', icon: '❝', label: 'Stories', color: '#D97706', bg: '#FEF3C7' },
   { id: 'security', icon: '🛡', label: 'Security', color: '#059669', bg: '#D1FAE5' },
   { id: 'roi', icon: '₹', label: 'ROI Calculator', color: '#F5A623', bg: '#FFF7ED' },
+  { id: 'cta', icon: '\u2192', label: 'Get Started', color: '#002E6E', bg: '#EEF4FF' },
 ];
 
 export function SidebarNav() {

@@ -8,31 +8,21 @@ Current implementation status:
 - Routed landing + app shell is live.
 - Core feature surfaces are implemented as interactive demo-backed workflows.
 - Hackathon runtime uses localStorage for auth/persistence.
-- Gemini can run directly from the frontend using a Vercel environment variable.
-- Express server scaffold still exists, but the current hackathon runtime does not require it.
+- AI flows now run through the Express backend endpoints.
+- Gemini uses `GEMINI_API_KEY` from the backend `.env`.
 
 ## Run
 
 ```bash
 npm install
-npm run dev:client
+npm run dev
 ```
+
+`npm run dev` now starts both backend (`/api`) and frontend (`vite`) together.
 
 ## Environment
 
-Create a frontend `.env` file:
-
-```bash
-VITE_GEMINI_API_KEY=
-VITE_GEMINI_MODEL=gemini-1.5-flash
-```
-
-For a hackathon deployment, you can skip Firebase and keep auth/data in localStorage.
-If you also want to skip Express, Gemini calls can run directly in the frontend using `VITE_GEMINI_API_KEY`.
-
-`VITE_API_BASE_URL` is optional and only needed if you decide to re-enable a backend route path later.
-
-Create a server `.env` file only if you want to keep the backend route path:
+Create a server `.env` file:
 
 ```bash
 PORT=3001
@@ -45,4 +35,6 @@ PAYTM_INDUSTRY_TYPE_DEV=Retail
 GEMINI_API_KEY=
 ```
 
-Without these values, the app continues to work in demo fallback mode.
+`VITE_API_BASE_URL` is optional in the frontend. If omitted, client requests use same-origin `/api` paths (works with Vite proxy in local dev).
+
+Without `GEMINI_API_KEY`, AI endpoints automatically fall back to demo responses so the app still runs.

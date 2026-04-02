@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { authenticate } from '../middleware/auth';
-import { apiRateLimiter } from '../middleware/rateLimit';
-import { demoPaymentLinks, demoTransactions } from '../../src/data/demoAppData';
+import { authenticate } from '../middleware/auth.ts';
+import { apiRateLimiter } from '../middleware/rateLimit.ts';
+import { demoPaymentLinks, demoTransactions } from '../../src/data/demoAppData.ts';
 
 export const paymentRoutes = Router();
 

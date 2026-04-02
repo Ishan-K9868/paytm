@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "node scripts/dev.mjs",
     "dev:client": "vite",
-    "dev:server": "tsx watch \"server/index.ts\"",
+    "dev:server": "node server/index.ts",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "tsx \"server/index.ts\"",
+    "server": "node server/index.ts",
     "test": "vitest run"
   },
   "dependencies": {

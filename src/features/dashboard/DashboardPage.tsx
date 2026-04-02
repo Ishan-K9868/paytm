@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AmountDisplay } from '@/components/AmountDisplay';
 import { Card } from '@/components/ui/Card';
 import { demoReconciliationSummary, demoTransactions } from '@/data/demoAppData';
+import { useActionFeed } from '@/features/action-feed/useActionFeed';
 import { PageIntro } from '@/features/shared/PageIntro';
 import { useMerchantStore } from '@/store/useMerchantStore';
 import { useNotificationStore } from '@/store/useNotificationStore';
@@ -12,6 +13,7 @@ export function DashboardPage() {
   const stats = useMerchantStore((state) => state.todayStats);
   const healthScore = useMerchantStore((state) => state.healthScore);
   const notifications = useNotificationStore((state) => state.notifications);
+  const { actions } = useActionFeed({ profile, stats });
 
   return (
     <PageIntro
@@ -113,6 +115,27 @@ export function DashboardPage() {
               <strong className="snapshot-value negative"><AmountDisplay amount={demoReconciliationSummary.delta} size="lg" type="debit" /></strong>
               <span className="snapshot-note">Needs reconciliation follow-up</span>
             </div>
+          </div>
+        </Card>
+
+        <Card accent="warning" className="dashboard-panel" style={{ gridColumn: 'span 12' }}>
+          <div className="dashboard-panel-header">
+            <div>
+              <div className="section-label">Action Feed</div>
+              <h2 className="dashboard-panel-title">AI-proactive next best actions</h2>
+            </div>
+            <Link className="dashboard-inline-link" to="/app/action-feed">Open full feed <ArrowUpRight size={14} /></Link>
+          </div>
+          <div className="dashboard-list">
+            {actions.slice(0, 3).map((action) => (
+              <div className="dashboard-list-row" key={action.id}>
+                <div>
+                  <div className="dashboard-row-title">{action.title}</div>
+                  <div className="dashboard-row-meta">{action.summary}</div>
+                </div>
+                <div className={`status-pill ${action.status}`}>{action.status.replace('_', ' ')}</div>
+              </div>
+            ))}
           </div>
         </Card>
       </div>
